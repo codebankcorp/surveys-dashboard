@@ -26,7 +26,7 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import routes from "routes.js";
 
 import sidebarImage from "assets/img/sidebar-3.jpg";
-
+import SuperAdminState from "context/admin/SuperAdminState";
 function Admin() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
@@ -35,7 +35,7 @@ function Admin() {
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/sup-admin") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -62,7 +62,7 @@ function Admin() {
     }
   }, [location]);
   return (
-    <>
+    <SuperAdminState>
       <div className="wrapper">
         <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
         <div className="main-panel" ref={mainPanel}>
@@ -81,7 +81,8 @@ function Admin() {
         image={image}
         setImage={(image) => setImage(image)}
       />
-    </>
+    </SuperAdminState>
+
   );
 }
 
