@@ -1,28 +1,10 @@
-/*!
 
-=========================================================
-* Light Bootstrap Dashboard React - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserProfile.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
 import Icons from "views/Icons.js";
-import Maps from "views/Maps.js";
-import Notifications from "views/Notifications.js";
-import Upgrade from "views/Upgrade.js";
+import PaymentApproval from "views/PaymentApproval";
 
 const dashboardRoutes = [
   
@@ -40,6 +22,22 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/sup-admin"
   },
+  
+  {
+    path: "/withdraws",
+    name: "Payment Approval",
+    icon: "nc-icon nc-money-coins",
+    component: PaymentApproval,
+    layout: "/sup-admin"
+  },
+  {
+    path: "/transactions",
+    name: "Transactions",
+    icon: "nc-icon nc-credit-card",
+    component: PaymentApproval,
+    layout: "/sup-admin"
+  },
+  
   {
     path: "/table",
     name: "Table List",
@@ -47,13 +45,7 @@ const dashboardRoutes = [
     component: TableList,
     layout: "/sup-admin"
   },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-paper-2",
-    component: Typography,
-    layout: "/sup-admin"
-  },
+ 
   {
     path: "/icons",
     name: "Icons",
@@ -61,20 +53,9 @@ const dashboardRoutes = [
     component: Icons,
     layout: "/sup-admin"
   },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/sup-admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/sup-admin"
-  }
+
+
+
 ];
 
 export default dashboardRoutes;

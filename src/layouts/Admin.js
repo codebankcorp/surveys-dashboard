@@ -27,7 +27,11 @@ import routes from "routes.js";
 
 import sidebarImage from "assets/img/sidebar-3.jpg";
 import SuperAdminState from "context/admin/SuperAdminState";
+import { useHistory } from "react-router-dom";
 function Admin() {
+
+  const history = useHistory()
+  
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
@@ -49,17 +53,23 @@ function Admin() {
     });
   };
   React.useEffect(() => {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    mainPanel.current.scrollTop = 0;
-    if (
-      window.innerWidth < 993 &&
-      document.documentElement.className.indexOf("nav-open") !== -1
-    ) {
-      document.documentElement.classList.toggle("nav-open");
-      var element = document.getElementById("bodyClick");
-      element.parentNode.removeChild(element);
+    if(localStorage.getItem('token')) {
+      document.documentElement.scrollTop = 0;
+      document.scrollingElement.scrollTop = 0;
+      mainPanel.current.scrollTop = 0;
+      if (
+        window.innerWidth < 993 &&
+        document.documentElement.className.indexOf("nav-open") !== -1
+      ) {
+        document.documentElement.classList.toggle("nav-open");
+        var element = document.getElementById("bodyClick");
+        element.parentNode.removeChild(element);
+      }
     }
+    else {
+      history.push('/login')
+    }
+  
   }, [location]);
   return (
     <SuperAdminState>

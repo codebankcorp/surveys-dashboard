@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import NotificationAlert from "react-notification-alert";
 
 // react-bootstrap components
-import { Button, Card, Container, Col, Table, Modal, FormSelect } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
+import { Button, Card, Container, Col, Table, Modal } from "react-bootstrap";
+
 import Spinner from "components/Loading/Spinner";
 
 function User() {
@@ -71,7 +71,7 @@ function User() {
       username: "",
       password: "",
       confirmPassword: "",
-    });getUsers
+    }); getUsers
     setShowModal(false);
   };
 
@@ -108,7 +108,7 @@ function User() {
         showToastMessage("Please fill out all fields!", "warning");
         setIsLoading(false);
         setIsButtonDisabled(false)
-        
+
         return;
       }
 
@@ -158,13 +158,13 @@ function User() {
   useEffect(() => {
     const fetchUsers = async () => {
       await getUsers();
-      setFilteredUsers(users); 
+      setFilteredUsers(users);
       setLoading(false);
     };
-  
-    fetchUsers(); 
+
+    fetchUsers();
   }, []);
-  
+
 
   const [showDelModal, setShowDelModal] = useState(false)
 
@@ -195,53 +195,73 @@ function User() {
     }
   }
 
-  const [filteredUsers , setFilteredUsers] = useState([])
+  const [filteredUsers, setFilteredUsers] = useState([])
 
-  const [filter,setFilter] = useState("")
+  const [filter, setFilter] = useState("")
 
- const handleFilter = (e) => {
-  const selectedFilter = e.target.value;
-  setFilter(selectedFilter);
+  const handleFilter = (e) => {
+    const selectedFilter = e.target.value;
+    setFilter(selectedFilter);
 
-  const today = new Date();
-  const todayDateString = today.toISOString().split('T')[0];
+    const today = new Date();
+    const todayDateString = today.toISOString().split('T')[0];
 
-  const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-  const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
-  const startOfWeekDateString = startOfWeek.toISOString().split('T')[0];
-  const endOfWeekDateString = endOfWeek.toISOString().split('T')[0];
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+    const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+    const startOfWeekDateString = startOfWeek.toISOString().split('T')[0];
+    const endOfWeekDateString = endOfWeek.toISOString().split('T')[0];
 
-  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-  const startOfMonthDateString = startOfMonth.toISOString().split('T')[0];
-  const endOfMonthDateString = endOfMonth.toISOString().split('T')[0];
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const startOfMonthDateString = startOfMonth.toISOString().split('T')[0];
+    const endOfMonthDateString = endOfMonth.toISOString().split('T')[0];
 
-  switch (selectedFilter) {
-    case 'today':
-      setFilteredUsers(users.filter(user => user.date.split('T')[0] === todayDateString));
-      break;
-    case 'this_week':
-      setFilteredUsers(users.filter(user => {
-        const userDate = new Date(user.date.split('T')[0]);
-        return userDate >= startOfWeek && userDate <= endOfWeek;
-      }));
-      break;
-    case 'this_month':
-      setFilteredUsers(users.filter(user => {
-        const userDate = new Date(user.date.split('T')[0]);
-        return userDate >= startOfMonth && userDate <= endOfMonth;
-      }));
-      break;
-      case 'blocked':
+    switch (selectedFilter) {
+      case 'today':
+        setFilteredUsers(users.filter(user => user.date.split('T')[0] === todayDateString));
+        break;
+      case 'this_week':
         setFilteredUsers(users.filter(user => {
-         user.blocked
+          const userDate = new Date(user.date.split('T')[0]);
+          return userDate >= startOfWeek && userDate <= endOfWeek;
         }));
         break;
-    default:
-      setFilteredUsers(users);
-      break;
-  }
-};
+      case 'this_month':
+        setFilteredUsers(users.filter(user => {
+          const userDate = new Date(user.date.split('T')[0]);
+          return userDate >= startOfMonth && userDate <= endOfMonth;
+        }));
+        break;
+      case 'blocked':
+        setFilteredUsers(users.filter(user => {
+         return user.blocked ===true ;
+        }));
+        break;
+      case 'users':
+        setFilteredUsers(users.filter(user => {
+         return user.role === 'user'
+        }));
+        break;
+        case 'managers':
+        setFilteredUsers(users.filter(user => {
+        return  user.role === 'manager'
+        }));
+        break;
+        case 'admins':
+        setFilteredUsers(users.filter(user => {
+        return  user.role === 'admin'
+        }));
+        break;
+        case 'superadmins':
+        setFilteredUsers(users.filter(user => {
+         return user.role === 'sup-admin'
+        }));
+        break;
+      default:
+        setFilteredUsers(users);
+        break;
+    }
+  };
 
 
   return (
@@ -460,16 +480,20 @@ function User() {
                   </div>
                 </div>
                 <div className="my-2">
-                <select className="form-control form-control-sm" style={{
-                  width:'25%'
-                }} onChange={handleFilter}>
-                  <option value='default'>All</option>
-                  <option value='today'>Today</option>
-                  <option value='this_week'>This Week</option>
-                  <option value='this_month'>This Month</option>
-                  <option value='blocked'>Blocked</option>
+                  <select className="form-control form-control-sm" style={{
+                    width: '25%'
+                  }} onChange={handleFilter}>
+                    <option value='default'>All</option>
+                    <option value='today'>Today</option>
+                    <option value='this_week'>This Week</option>
+                    <option value='this_month'>This Month</option>
+                    <option value='blocked'>Blocked</option>
+                    <option value="user">Users</option>
+                    <option value="managers">Managers</option>
+                    <option value="admins">Admins</option>
+                    <option value="superadmins">Super Admins</option>
 
-                </select>
+                  </select>
                 </div>
               </Card.Title>
             </Card.Header>
@@ -481,9 +505,9 @@ function User() {
                   <tr>
                     <th className="border-0">Name</th>
                     <th className="border-0">Email</th>
-                    <th className="border-0">Username</th>
                     <th className="border-0">Role</th>
                     <th className="border-0">Signup Date</th>
+                    <th className="border-0">Stats</th>
                     <th className="border-0">Actions</th>
                   </tr>
                 </thead>
@@ -494,9 +518,11 @@ function User() {
                         <tr>
                           <td>{user.name}</td>
                           <td>{user.email}</td>
-                          <td>{user.email}</td>
                           <td>{user.role}</td>
                           <td>{user.date.split("T")[0]}</td>
+                          <td>
+                            <Button variant="info" size="sm">Check</Button>
+                          </td>
                           <td>
                             <Button variant="primary" size="sm" onClick={() => editUserModal(user._id)}>
                               Edit

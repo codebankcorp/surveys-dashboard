@@ -22,6 +22,23 @@ const SuperAdminState = (props)=>{
     const [users, setUsers] = useState([]);
    
 
+    const Login = async (credentials) => {
+        const response = await axios.post(`${host}/auth/login`, credentials);
+        const json = response.data;
+        if (json.success) {
+            localStorage.setItem('token', json.token);
+            if (json.userRole === "sup-admin") {
+                navigate.push("/sup-admin");
+            } 
+            else {
+                showToastMessage('not allowed', 'danger')
+            }
+        } else {
+            showToastMessage(json.error, "danger");
+        }
+    }
+
+
     const notificationAlertRef = React.useRef(null);
     const showToastMessage = (message, type) => {
       var options = {};
@@ -38,7 +55,7 @@ const SuperAdminState = (props)=>{
     // sidebar section
     const getUser = async ()=>{
         if(!localStorage.getItem('token')){
-            navigate('/');
+            navigate.push('/login');
             return;
         }
 
@@ -206,7 +223,7 @@ const SuperAdminState = (props)=>{
 
     return <AdminContext.Provider value={{addUser, users, getUsers, editUserC, deleteUser, getUser, loggedInUser, getAllPayments, payments, 
               showToastMessage,
-            paymentsApproval, getApprovalPayments,blockUsers,unBlockUsers
+            paymentsApproval, getApprovalPayments,blockUsers,unBlockUsers,Login
         }}>
         {props.children}
         <div className="rna-container">
