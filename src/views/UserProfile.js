@@ -269,8 +269,8 @@ function User() {
       <div className="rna-container">
         <NotificationAlert ref={notificationAlertRef} />
       </div>
-      <Container>
-        <Modal
+      <Container fluid>
+        <Modal 
           className=" modal-primary "
           show={showModal}
           onHide={() => closeModal()}
@@ -488,7 +488,7 @@ function User() {
                     <option value='this_week'>This Week</option>
                     <option value='this_month'>This Month</option>
                     <option value='blocked'>Blocked</option>
-                    <option value="user">Users</option>
+                    <option value="users">Users</option>
                     <option value="managers">Managers</option>
                     <option value="admins">Admins</option>
                     <option value="superadmins">Super Admins</option>

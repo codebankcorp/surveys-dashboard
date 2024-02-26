@@ -33,7 +33,6 @@ function PaymentApproval() {
     const openModel = (user) => {
         setUser(user)
         setShowModal(true)
-        console.log(user)
     }
 
     const [user, setUser] = useState({})
@@ -41,44 +40,40 @@ function PaymentApproval() {
 
     return (
         <>
-
-            <Container>
-
-
-                <Modal
-                    className="modal "
+            <Container fluid>
+                <Modal size="xl"
                     show={showModal}
                     onHide={() => setShowModal(false)}
                 >
-                    {/* <Modal.Header className="justify-content-center">
-             User Details
-          </Modal.Header> */}
-                    <Modal.Body className="text-center">
-                            <Card className="card-plain table-plain-bg">
-                                <Card.Header>
-                                    <Card.Title as="h4">User Details</Card.Title>
-                                </Card.Header>
-                                <Card.Body className="table-full-width table-responsive px-0">
-                                    <Table className="table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th className="border-0">Name</th>
-                                                <th className="border-0">Email</th>
-                                                <th className="border-0">Signup Date</th>
-                                                <th className="border-0">Total Earnings</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>{user?.name}</td>
-                                                <td>{user?.email}</td>
-                                                <td>{user?.date?.split("T")[0]}</td>
-                                                <td>{user?.totalEarnings}</td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                </Card.Body>
-                            </Card>
+                    <Modal.Body>
+                        <Card className="card-plain table-plain-bg">
+                            <Card.Header>
+                                <Card.Title as="h4">User Details</Card.Title>
+                            </Card.Header>
+                            <Card.Body className="table-full-width table-responsive px-0">
+                            {loading ? <div className="d-flex justify-content-center align-items-center">
+                        <Spinner />
+                    </div>: <Table className="table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th className="border-0">Name</th>
+                                            <th className="border-0">Email</th>
+                                            <th className="border-0">Signup Date</th>
+                                            <th className="border-0">Total Earnings</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{user?.name}</td>
+                                            <td>{user?.email}</td>
+                                            <td>{user?.date?.split("T")[0]}</td>
+                                            <td>{user?.totalEarnings}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>}
+                                
+                            </Card.Body>
+                        </Card>
                     </Modal.Body>
                     <div className="modal-footer">
                         <Button

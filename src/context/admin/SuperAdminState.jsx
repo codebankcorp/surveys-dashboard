@@ -28,10 +28,10 @@ const SuperAdminState = (props)=>{
         if (json.success) {
             localStorage.setItem('token', json.token);
             if (json.userRole === "sup-admin") {
-                navigate.push("/sup-admin");
+                navigate.push("/sup-admin/dashboard");
             } 
             else {
-                showToastMessage('not allowed', 'danger')
+                showToastMessage('Not Allowed', 'danger')
             }
         } else {
             showToastMessage(json.error, "danger");
@@ -218,12 +218,67 @@ const SuperAdminState = (props)=>{
         }
     }
 
-    
+    // add a task
+    const addTask = async (data) => {
+        const response = await axios({
+            url:`${host}/sup-admin/add-task`,
+            data:data,
+            headers:{
+                "auth-token":localStorage.getItem('token')
+            },
+            method:"POST"
+        })
+
+        const json = response.data;
+
+        if(json.success) {
+            showToastMessage(json.message,'success')
+            return true;
+        }
+        else {
+            showToastMessage(json.error,'danger')
+        }
+
+    }
+
+
+    const [tasks,setTasks] = useState([])
+    //get all tasks
+    const getTasks = async() => {
+        const res = await axios({
+            url:`${host}/sup-admin/tasks`,
+            method:"GET",
+            headers:{
+                "auth-token":localStorage.getItem('token')
+            }
+        })
+        const json = res.data;
+        if(json.success ) {
+            setTasks(json.tasks)
+        }
+    }
+
+    const [earningsToday,setEarningsToday ] = useState([])
+
+    const getEarningsToday = async() => {
+        const res = await axios({
+            url:`${host}/sup-admin/earnings-today`,
+            method:"GET",
+            headers:{
+                "auth-token":localStorage.getItem('token')
+            }
+        })
+        const json = res.data;
+        if(json.success ) {
+            setEarningsToday(json.earnings)
+        }
+    }
 
 
     return <AdminContext.Provider value={{addUser, users, getUsers, editUserC, deleteUser, getUser, loggedInUser, getAllPayments, payments, 
               showToastMessage,
-            paymentsApproval, getApprovalPayments,blockUsers,unBlockUsers,Login
+            paymentsApproval, getApprovalPayments,blockUsers,unBlockUsers,Login,addTask,
+            getTasks,tasks,getEarningsToday,earningsToday
         }}>
         {props.children}
         <div className="rna-container">

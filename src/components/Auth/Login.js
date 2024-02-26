@@ -57,7 +57,7 @@ export default function Login() {
         <NotificationAlert ref={notificationAlertRef}/>
       </div>
       <div className="Auth-form-container">
-        <form className="Auth-form">
+        <form className="Auth-form py-5">
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="form-group mt-3">
@@ -83,7 +83,7 @@ export default function Login() {
                 onChange={onChange}
               />
             </div>
-            <div className="d-grid mt-3">
+            <div className="d-grid my-4">
               <button type="button" className="btn btn-primary" style={{ width: "100%" }} onClick={handleClick}>
                 {
                   buttonDisabled ? <ButtonLoader /> : "Sign In"

@@ -1,10 +1,8 @@
 
 import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserProfile.js";
-import TableList from "views/TableList.js";
-import Typography from "views/Typography.js";
-import Icons from "views/Icons.js";
 import PaymentApproval from "views/PaymentApproval";
+import Tasks from "views/Tasks";
 
 const dashboardRoutes = [
   
@@ -37,22 +35,14 @@ const dashboardRoutes = [
     component: PaymentApproval,
     layout: "/sup-admin"
   },
-  
   {
-    path: "/table",
-    name: "Table List",
-    icon: "nc-icon nc-notes",
-    component: TableList,
+    path: "/tasks",
+    name: "Tasks",
+    icon: "nc-icon nc-paper-2",
+    component: Tasks,
     layout: "/sup-admin"
   },
- 
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-atom",
-    component: Icons,
-    layout: "/sup-admin"
-  },
+
 
 
 

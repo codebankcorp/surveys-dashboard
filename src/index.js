@@ -24,7 +24,7 @@ root.render(
       <SuperAdminState>
       <Route path = '/login' component= {Login} />
       </SuperAdminState>
-      <Redirect from="/" to="/sup-admin" />
+      <Redirect from="/*" to="/sup-admin/dashboard" />
     </Switch>
   
 

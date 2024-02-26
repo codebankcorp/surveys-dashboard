@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import {
@@ -16,8 +16,16 @@ import {
   Tooltip,
 } from "react-bootstrap";
 import TopUsersToday from "./TopUsersToday";
+import SuperAdminContext from "context/admin/adminContext";
 
 function Dashboard() {
+  const context = useContext(SuperAdminContext)
+  const {getUsers , users} = context ;
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      getUsers()
+    }
+  })
   return (
     <>
       <Container fluid>
@@ -34,7 +42,8 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Total Users</p>
-                      <Card.Title as="h4">220
+                      <Card.Title as="h4">
+                        {users?.length}
                       </Card.Title>
                     </div>
                   </Col>
@@ -132,7 +141,6 @@ function Dashboard() {
           <Col lg="6">
             <div style={{
               backgroundColor:'white',
-              // borderRadius:8,
               border:'1px solid #dfdfdf'
             }}>
               <TopUsersToday />
